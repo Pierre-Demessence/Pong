@@ -6,7 +6,7 @@ function RaquetteD(zoneDeJeu) {
 	// Héritage
 	// **********************
 	// Constructeur de la classe parent, Raquette, avec des touches par défaut et une classe CSS : raquetteD
-	Raquette.call(this, zoneDeJeu, {haut:38,bas:40,service:96}, "raquetteD");
+	Raquette.call(this, zoneDeJeu, {haut:80,bas:76,service:32}, "raquetteD");
 
 	// **********************
 	// Méthodes publiques

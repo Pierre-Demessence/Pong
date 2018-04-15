@@ -52,31 +52,38 @@
 	<body class="claro">
 		<table id="options">
 			<tr>
-				<th><label>Niveau de l'IA </label></th>
-				<th><label>Gauche </label></th>
-				<th><label>Droite </label></th>
-				<th><label>Service </label></th>
+				<th><label>AI Level </label></th>
+				<th><label>Left </label></th>
+				<th><label>Right </label></th>
+				<th><label>Serve </label></th>
 			</tr>
 			<tr>
 				<td>
-					<span style="display:inline-block;" id="level"></span><div id="level_info" style="text-align:center;">1</div>
+					<select id="level" style="width:100%;">
+					  <option value="1">1 - Apprentice</option>
+					  <option value="2">2 - Novice</option>
+					  <option value="3">3 - Adept</option>
+					  <option value="4">4 - Expert</option>
+					  <option value="5">5 - Master</option>
+					  <option value="5">10 - God</option>
+					</select>
 				</td>
 				<td>
-					<input type="radio" name="gauche" value="IA" checked>Humain
+					<input type="radio" name="gauche" value="IA" checked>Human
 					<br>
-					<input type="radio" name="gauche" value="HU">IA
+					<input type="radio" name="gauche" value="HU">AI
 				</td>
 				<td>
-					<input type="radio" name="droite" value="IA" checked>Humain
+					<input type="radio" name="droite" value="IA" checked>Human
 					<br>
-					<input type="radio" name="droite" value="HU">IA
+					<input type="radio" name="droite" value="HU">AI
 				</td>
 				<td>
-					<input type="radio" name="service" value="1">Gauche
+					<input type="radio" name="service" value="1">Left
 					<br>
-					<input type="radio" name="service" value="0">Droite
+					<input type="radio" name="service" value="0">Right
 					<br>
-					<input type="radio" name="service" value="-1" checked>Hasard
+					<input type="radio" name="service" value="-1" checked>Random
 				</td>			
 			</tr>
 		</table>
@@ -88,23 +95,16 @@
 			<div id="score_g" class="score">0</div>
 			<div id="score_d" class="score">0</div>
 		</div>
+		<br>
+		Controls :
+		<ul>
+			<li>Up/Down<ul><li>W/S (Left Paddle)</li><li>P/L (Right Paddle)</li></ul></li>
+			<li>Serve : Space</li>
+		<ul>
 
 		<script type="text/javascript">
-			require(["dojo/ready", "dijit/form/HorizontalSlider"], function(ready, HorizontalSlider) {
+			require(["dojo/ready"], function(ready, HorizontalSlider) {
 				ready(function() {
-					new HorizontalSlider({
-						name: "level",
-						value: 1,
-						minimum: 1,
-						maximum: 5,
-						discreteValues: 5,
-						intermediateChanges: true,
-						style: "width:100px;",
-						onChange: function(v) {
-							document.getElementById("level_info").innerHTML = v;
-							optionsChanged();
-						},
-					}, "level");
 
 					document.getElementsByName("gauche").item(0).onchange = optionsChanged;
 					document.getElementsByName("gauche").item(1).onchange = optionsChanged;
@@ -120,7 +120,7 @@
 					}
 
 					function optionsChanged() {
-						document.getElementById("start_info").innerHTML = "Relancer le jeu pour que les modifications prennent effet.";
+						document.getElementById("start_info").innerHTML = "Start again for the new settings to take effect.";
 					}
 
 					function start() {
@@ -130,7 +130,8 @@
 
 						var g = document.getElementsByName("gauche").item(1).checked;
 						var d = document.getElementsByName("droite").item(1).checked;
-						var l = dijit.byId("level").get("value");
+						var levelSelect = document.getElementById("level");
+						var l = levelSelect.options[levelSelect.selectedIndex].value;
 						var service = -1;
 						for(var i in document.getElementsByName("service")) {
 							if(document.getElementsByName("service").item(i).checked)
